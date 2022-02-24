@@ -19,19 +19,18 @@ for fileName in filesToParse:
     parsedData.append(parsed["content"])
 
 
-with open('list.csv', newline='', encoding='utf-8') as file:
+with open('list.csv', newline='', encoding='utf-8-sig') as file:
     reader = csv.reader(file)
     locationList = list(reader)
 
 found = False
-
-for location in locationList:
-    for data in parsedData:
-        if data.find(location[0]) != -1:
-            print(location[0].ljust(12) + " is in " + filesToParse[parsedData.index(data)])
-            found = True
-
-if (not found):
-    print("No affected buildings found.")
+with open('results.txt', 'w', encoding='utf-8-sig') as file:
+    for location in locationList:
+        for data in parsedData:
+            if data.find(location[0]) != -1:
+                file.write(location[0].ljust(12) + " is in " + filesToParse[parsedData.index(data)]+"\n")
+                found = True
+    if (not found):
+        file.write("No affected buildings found.")
 
 
